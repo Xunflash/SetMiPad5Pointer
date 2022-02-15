@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.xunflash.testxposed"
+        applicationId "com.xunflash.setMiPad5Pointer"
         minSdkVersion 29
         targetSdkVersion 31
         versionCode 1921
