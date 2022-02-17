@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:background="@color/white"
+        android:background="?attr/colorSurface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -99,7 +99,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|start"
                     android:text="@string/module_info_text"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="16sp" />
 
                 <TextView
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|start"
                     android:text="@string/module_setting_text"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="16sp" />
 
                 <TextView

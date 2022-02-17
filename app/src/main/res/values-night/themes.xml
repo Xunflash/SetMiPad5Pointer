@@ -1,3 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+    <style name="Theme.setMiPad5Pointer" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="colorSurface">@color/grey</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_android</item>
+        <item name="colorSecondaryVariant">@color/blue_android</item>
+        <item name="colorOnSecondary">@color/grey</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="Widget.Shanxunhelper.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/colorSecondary</item>
+        <item name="iconTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
