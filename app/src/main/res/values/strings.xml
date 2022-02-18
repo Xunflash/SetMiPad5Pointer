@@ -1,12 +1,7 @@
 <resources>
     <string name="app_name">小米平板指针替换</string>
     <string name="text_114514">114514</string>
-    <string name="edit">edit</string>
-    <string name="content_description_search">description</string>
-    <string name="favorite">favoriter</string>
-    <string name="content_description_favorite">descriptionfav</string>
     <string name="more">关于</string>
-    <string name="content_description_more">descriptionmore</string>
     <string name="page_title">米板指针替换</string>
     <string name="module_active_text">模块已激活</string>
     <string name="module_inactive">模块未激活</string>
