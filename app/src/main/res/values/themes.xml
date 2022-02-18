@@ -14,11 +14,20 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="switchStyle">@style/Widget.App.Switch</item>
     </style>
     <style name="Widget.Shanxunhelper.Button" parent="Widget.Material3.Button">
         <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="iconTint">@color/black</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <item name="colorOnSurface">@color/grey</item>
+        <item name="colorSecondary">@color/blue_android_dark</item>
     </style>
 
 </resources>

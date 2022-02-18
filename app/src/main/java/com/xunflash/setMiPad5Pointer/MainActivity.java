@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void toSettingActivity(View view){
         Intent intent=new Intent(MainActivity.this, SettingActivity.class);
-        //startActivity(intent);
+        startActivity(intent);
     }
     public static boolean isModuleActive(){
         return false;
