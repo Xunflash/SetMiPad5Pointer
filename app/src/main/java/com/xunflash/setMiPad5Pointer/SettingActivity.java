@@ -29,11 +29,13 @@ public class SettingActivity extends AppCompatActivity {
     }
     public void hideIcon(){
         PackageManager pm =getPackageManager();
+        final boolean falg = true;
         SwitchMaterial switchMaterial = findViewById(R.id.hide_icon_switch);
         ComponentName componentName=new ComponentName(this,BuildConfig.APPLICATION_ID+".launcher");
         SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         if (preferences != null) {
-            switchMaterial.setChecked(preferences.getBoolean("flag",true));
+            boolean name = preferences.getBoolean("flag", falg);
+            switchMaterial.setChecked(name);
         }
         switchMaterial.setOnCheckedChangeListener(new SwitchMaterial.OnCheckedChangeListener(){
             @Override
