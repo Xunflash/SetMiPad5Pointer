@@ -30,7 +30,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class MainHook implements IXposedHookLoadPackage,IXposedHookZygoteInit {
+public class MainHook implements IXposedHookLoadPackage{
     public static final String TAG = "Xunflash";
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -42,47 +42,31 @@ public class MainHook implements IXposedHookLoadPackage,IXposedHookZygoteInit {
         if (("android".equals(lpparam.packageName)) && (lpparam.processName.equals("android"))) {
 
             Class<?> PointerImageView = XposedHelpers.findClass("com.android.server.magicpointer.PointerImageView", lpparam.classLoader);
+            Class<?> MiuiMagicPointerService = XposedHelpers.findClass("com.android.server.magicpointer.MiuiMagicPointerService", lpparam.classLoader);
 
-            hookAllMethods(findClass("com.android.server.magicpointer.MiuiMagicPointerService", lpparam.classLoader),"init", new XC_MethodHook() {
-                //获取FeedbackView对象并且调用setVisibility方法隐藏背景阴影
-                protected void afterHookedMethod(MethodHookParam methodHookParam) throws Throwable {
-                    Context context = (Context) methodHookParam.args[0];
-                    Method setVisibility=PointerImageView.getMethod("setVisibility",int.class);
-                    ImageView FeedbackView =(ImageView) getObjectField(methodHookParam.thisObject,"mFeedbackView");
-                    setVisibility.invoke(FeedbackView,View.GONE);
-                    XposedBridge.log("After Hooking");
-                }
-            });
+            for (Method method : MiuiMagicPointerService.getDeclaredMethods()) {
+                if(method.getName().equals("init"))
+                    XposedBridge.hookMethod( method, new XC_MethodHook() {
+                        //获取FeedbackView对象并且调用setVisibility方法隐藏背景阴影
+                        protected void afterHookedMethod(MethodHookParam methodHookParam) throws Throwable {
+                            //Context context = (Context) methodHookParam.args[0];
+                            Method setVisibility = PointerImageView.getMethod("setVisibility", int.class);
+                            ImageView FeedbackView = (ImageView) getObjectField(methodHookParam.thisObject, "mFeedbackView");
+                            ImageView PointerView = (ImageView) getObjectField(methodHookParam.thisObject, "mPointerView");
+                            PointerView.setBackground(pngPacker.getPng());
+                            setVisibility.invoke(FeedbackView, View.GONE);
+                            XposedBridge.log("After Hooking");
+                        }
+                    });
+                if(method.getName().equals("updatePointerStyleIfNeed")||method.getName().equals("updatePointerColor"))
+                    //把这两个根据页面显示更新显示指针的方法移除
+                    XposedBridge.hookMethod(method, new XC_MethodReplacement() {
+                        @Override
+                        protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                            return null;
+                        }
+                    });
+            }
         }
     }
-
-    @Override
-    public void initZygote(StartupParam startupParam) throws Throwable {
-        //Hook鼠标指针资源
-        XResources.setSystemWideReplacement("android.miui","drawable","magic_pointer_pointer", new XResources.DrawableLoader() {
-            @Override
-            public Drawable newDrawable(XResources res, int id) throws Throwable {
-                return pngPacker.getPng();
-            }
-        });
-        XResources.setSystemWideReplacement("android.miui","drawable","magic_pointer_spot", new XResources.DrawableLoader() {
-            @Override
-            public Drawable newDrawable(XResources res, int id) throws Throwable {
-                return pngPacker.getPng();
-            }
-        });
-        XResources.setSystemWideReplacement("android.miui","drawable","magic_dark_pointer_spot", new XResources.DrawableLoader() {
-            @Override
-            public Drawable newDrawable(XResources res, int id) throws Throwable {
-                return pngPacker.getPng();
-            }
-        });
-        XResources.setSystemWideReplacement("android.miui","drawable","magic_dark_pointer_pointer", new XResources.DrawableLoader() {
-            @Override
-            public Drawable newDrawable(XResources res, int id) throws Throwable {
-                return pngPacker.getPng();
-            }
-        });
-    }
-
 }
