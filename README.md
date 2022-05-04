@@ -2,7 +2,7 @@
 
 > 替换小米平板圆点鼠标指针
 
-https://img.shields.io/github/downloads/Xunflash/SetMipad5Pointer/total?style=flat-square
+![GitHub all releases](https://img.shields.io/github/downloads/Xunflash/SetMipad5Pointer/total?style=flat-square)
 
 #### 1.安装
 
