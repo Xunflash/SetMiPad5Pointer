@@ -2,6 +2,8 @@
 
 > 替换小米平板圆点鼠标指针
 
+![GitHub all releases](https://img.shields.io/github/downloads/Xunflash/SetMipad5Pointer/total?style=flat-square)
+
 #### 1.安装
 
 安装release页面的apk，并在lsposed管理器中勾选系统框架即可使用
