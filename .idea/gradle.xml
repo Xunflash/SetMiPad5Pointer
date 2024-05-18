@@ -8,13 +8,13 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="C:/ProgramData/chocolatey/lib/gradle/tools/gradle-7.0.2" />
+        <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

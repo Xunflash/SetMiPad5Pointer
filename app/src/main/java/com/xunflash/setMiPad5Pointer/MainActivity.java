@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.gyf.immersionbar.ImmersionBar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "setMiPad5Pointer";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

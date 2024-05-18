@@ -52,6 +52,7 @@
 
                 <LinearLayout
                     android:id="@+id/module_status_layout"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:clickable="true"
@@ -81,6 +82,52 @@
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/hide_icon_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="15dp"
+                        android:checked="false"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/features_text"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="特性" />
+                <LinearLayout
+                    android:id="@+id/new_version_switch_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/new_version_switch_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/ic_round_settings_24"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/new_version_switch_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|start"
+                        android:text="@string/new_version_switch_text"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/new_version_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="15dp"

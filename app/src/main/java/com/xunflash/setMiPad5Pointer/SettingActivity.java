@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -13,46 +14,70 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import de.robv.android.xposed.XSharedPreferences;
+
 public class SettingActivity extends AppCompatActivity {
+    public boolean NewFeatureEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         hideIcon();
-        MaterialToolbar toolbar=findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        New_Feature(); // 确保初始化 new_version_switch 的状态
+        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
     }
-    public void hideIcon(){
-        PackageManager pm =getPackageManager();
-        final boolean falg = true;
+
+    public void hideIcon() {
+        PackageManager pm = getPackageManager();
+        final boolean flag = true;
         SwitchMaterial switchMaterial = findViewById(R.id.hide_icon_switch);
-        ComponentName componentName=new ComponentName(this,BuildConfig.APPLICATION_ID+".launcher");
+        ComponentName componentName = new ComponentName(this, BuildConfig.APPLICATION_ID + ".launcher");
         SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         if (preferences != null) {
-            boolean name = preferences.getBoolean("flag", falg);
+            boolean name = preferences.getBoolean("flag_hideicon", flag);
             switchMaterial.setChecked(name);
         }
-        switchMaterial.setOnCheckedChangeListener(new SwitchMaterial.OnCheckedChangeListener(){
+        switchMaterial.setOnCheckedChangeListener(new SwitchMaterial.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     pm.setComponentEnabledSetting(componentName,
                             PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-
-                }else {
+                } else {
                     pm.setComponentEnabledSetting(componentName,
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
                 }
                 SharedPreferences preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("flag", isChecked);
+                editor.putBoolean("flag_hideicon", isChecked);
                 editor.apply();
             }
         });
     }
+
+    public void New_Feature() {
+        final boolean flag = true;
+        SwitchMaterial switchMaterial = findViewById(R.id.new_version_switch);
+        SharedPreferences preferences = getSharedPreferences("user", Context.MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = preferences.edit();
+        if (preferences != null) {
+            boolean name = preferences.getBoolean("flag_newpointer", flag);
+            switchMaterial.setChecked(name);
+        }
+        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            NewFeatureEnabled = isChecked;
+            editor.putBoolean("flag_newpointer", isChecked);
+            Log.d("111", "onCheckedChanged: "+(NewFeatureEnabled?"1":"0"));
+            editor.apply();
+        });
+    }
 }
+
+
