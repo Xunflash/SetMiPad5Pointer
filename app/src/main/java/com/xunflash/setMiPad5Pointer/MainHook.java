@@ -1,31 +1,14 @@
 package com.xunflash.setMiPad5Pointer;
 
-import static de.robv.android.xposed.XposedBridge.getXposedVersion;
-import static de.robv.android.xposed.XposedBridge.hookAllMethods;
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
-import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.XResources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
@@ -34,21 +17,21 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class MainHook implements IXposedHookLoadPackage {
-    public static final String TAG = "Xunflash";
+    public static final String TAG = "setMiPad5Pointer";
 
     @Override
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
         // Hook自身检测模块是否激活
         if ("com.xunflash.setMiPad5Pointer".equals(lpparam.packageName)) {
             XposedHelpers.findAndHookMethod("com.xunflash.setMiPad5Pointer.MainActivity", lpparam.classLoader, "isModuleActive", XC_MethodReplacement.returnConstant(true));
         }
 
         // 使用 XSharedPreferences 读取新特性开关状态
-        XSharedPreferences pref = new XSharedPreferences(BuildConfig.APPLICATION_ID, "user");
-        pref.reload();
-        boolean isNewFeatureEnabled = pref.getBoolean("flag_newpointer", true);
-        XposedBridge.log("SetMiPad5Pointer: File Path:"+ (pref.getFile().canRead()?"1":"0"));
-        XposedBridge.log("SetMiPad5Pointer: Hook start"+(isNewFeatureEnabled?"1":"0"));
+        XSharedPreferences prefs = new XSharedPreferences(BuildConfig.APPLICATION_ID, "user");
+        prefs.reload();
+        boolean isNewFeatureEnabled = prefs.getBoolean("flag_newpointer", true);
+        Log.i(TAG, "XSharedPreferences file Path: " + (prefs.getFile().getAbsolutePath()));
+        Log.i(TAG, "isNewFeatureEnabled: " + (isNewFeatureEnabled ? "1" : "0"));
 
         // HookMiuiMagicPointerService类
         if (("android".equals(lpparam.packageName)) && (lpparam.processName.equals("android"))) {
@@ -81,7 +64,7 @@ public class MainHook implements IXposedHookLoadPackage {
                         if (method.getName().equals("updatePointerStyleIfNeed") || method.getName().equals("updatePointerColor")) {
                             XposedBridge.hookMethod(method, new XC_MethodReplacement() {
                                 @Override
-                                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                                protected Object replaceHookedMethod(MethodHookParam param) {
                                     return null;
                                 }
                             });
