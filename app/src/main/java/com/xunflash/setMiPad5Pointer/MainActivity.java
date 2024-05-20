@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.snackbar.Snackbar;
 import com.gyf.immersionbar.ImmersionBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,8 +60,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toSettingActivity(View view) {
+        if(MainActivity.isModuleActive()){
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(intent);
+        }
+        else{
+            Snackbar.make(view, R.string.open_module, Snackbar.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     public void toAboutActivity() {
